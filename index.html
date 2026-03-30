@@ -1,839 +1,289 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Berenger — Digital Architect</title>
+<title>Sommin Berenger SANNI BAYER — Digital Architect</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --black: #06060a;
-    --dark: #0e0d14;
-    --card: #13121a;
-    --border: rgba(255,255,255,0.07);
-    --gold: #D4A34A;
-    --gold-dim: rgba(212,163,74,0.15);
-    --ember: #C4622D;
-    --ember-dim: rgba(196,98,45,0.12);
-    --green: #3DD68C;
-    --text: #f0ede8;
-    --muted: #7a7585;
-    --font-display: 'Syne', sans-serif;
-    --font-mono: 'Space Mono', monospace;
-    --font-body: 'DM Sans', sans-serif;
-  }
+:root {
+  --gold: #D4A34A;
+  --gold-dim: rgba(212,163,74,0.15);
+  --ember: #C4622D;
+  --green: #3DD68C;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+  --transition-theme: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+[data-theme="dark"] {
+  --bg: #06060a; --bg-alt: #0e0d14; --card: #13121a;
+  --border: rgba(255,255,255,0.07); --border-solid: #1e1c28;
+  --text: #f0ede8; --text-secondary: rgba(240,237,232,0.55); --text-muted: #7a7585;
+  --nav-bg: rgba(6,6,10,0.95); --hero-grid: rgba(255,255,255,0.025);
+  --photo-bg: #1a1825; --shadow: 0 24px 60px rgba(0,0,0,0.5);
+  --stroke-outline: rgba(212,163,74,0.5);
+}
+[data-theme="light"] {
+  --bg: #faf9f6; --bg-alt: #f0ede6; --card: #ffffff;
+  --border: rgba(0,0,0,0.07); --border-solid: #e4dfd5;
+  --text: #111018; --text-secondary: rgba(17,16,24,0.6); --text-muted: #8a8694;
+  --nav-bg: rgba(250,249,246,0.96); --hero-grid: rgba(0,0,0,0.04);
+  --photo-bg: #ede9e0; --shadow: 0 24px 60px rgba(0,0,0,0.1);
+  --stroke-outline: rgba(196,98,45,0.55);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);overflow-x:hidden;cursor:none;transition:var(--transition-theme)}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:0.3}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* CURSOR */
+.cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference}
+[data-theme="light"] .cursor{mix-blend-mode:multiply}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(212,163,74,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.12s ease-out}
 
-  html { scroll-behavior: smooth; }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:var(--transition-theme)}
+.nav-logo{font-family:var(--font-display);font-weight:800;font-size:.95rem;letter-spacing:.06em;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{font-family:var(--font-mono);font-size:.68rem;color:var(--text-muted);text-decoration:none;letter-spacing:.1em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:14px}
 
-  body {
-    background: var(--black);
-    color: var(--text);
-    font-family: var(--font-body);
-    overflow-x: hidden;
-    cursor: none;
-  }
+/* THEME TOGGLE */
+.theme-toggle{width:46px;height:26px;background:var(--border-solid);border:1px solid var(--border);border-radius:13px;position:relative;cursor:pointer;transition:background .3s,border-color .3s;flex-shrink:0}
+.theme-toggle:hover{border-color:var(--gold)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--gold);transition:transform .3s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1}
+[data-theme="light"] .toggle-thumb{transform:translateX(20px)}
+.nav-cta{font-family:var(--font-mono);font-size:.68rem;color:#000;background:var(--gold);padding:10px 20px;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:opacity .2s,transform .2s}
+.nav-cta:hover{opacity:.85;transform:translateY(-1px)}
 
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 10px; height: 10px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s, opacity 0.2s;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 36px; height: 36px;
-    border: 1.5px solid rgba(212,163,74,0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: all 0.12s ease-out;
-  }
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 400px;align-items:center;padding:100px 48px 80px;position:relative;overflow:hidden;gap:60px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(196,98,45,.1) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 20% 60%,rgba(212,163,74,.07) 0%,transparent 60%),var(--bg);transition:var(--transition-theme)}
+[data-theme="light"] .hero-bg{background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(196,98,45,.06) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 20% 60%,rgba(212,163,74,.05) 0%,transparent 60%),var(--bg)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--hero-grid) 1px,transparent 1px),linear-gradient(90deg,var(--hero-grid) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 90% 80% at 50% 50%,black,transparent)}
+.hero-content{position:relative;z-index:1}
+.hero-tag{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.hero-tag::before{content:'';display:inline-block;width:30px;height:1px;background:var(--gold)}
+.hero-name{font-family:var(--font-display);font-weight:800;font-size:clamp(2.8rem,6.5vw,7rem);line-height:.9;letter-spacing:-.03em}
+.hero-name .ln1{display:block;color:var(--text)}
+.hero-name .ln2{display:block;-webkit-text-stroke:1.5px var(--stroke-outline);color:transparent}
+.hero-desc{max-width:480px;font-size:.98rem;line-height:1.75;color:var(--text-secondary);font-weight:300;margin-top:26px}
+.hero-desc strong{color:var(--gold);font-weight:500}
+.hero-stats{display:flex;gap:36px;margin-top:40px}
+.stat-num{font-family:var(--font-display);font-size:1.9rem;font-weight:800;color:var(--text);display:block;line-height:1}
+.stat-num span{color:var(--gold)}
+.stat-label{font-family:var(--font-mono);font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-top:4px;display:block}
+.hero-ctas{display:flex;gap:12px;margin-top:36px}
+.btn-primary{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#000;background:var(--gold);padding:13px 26px;text-decoration:none;transition:opacity .2s,transform .2s;display:inline-block}
+.btn-primary:hover{opacity:.85;transform:translateY(-2px)}
+.btn-outline{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text);border:1px solid var(--border-solid);padding:13px 26px;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
 
-  /* ── Noise overlay ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.4;
-  }
+/* PHOTO CARD */
+.hero-photo-col{position:relative;z-index:1;display:flex;justify-content:center}
+.photo-card{position:relative;width:320px}
+.photo-card::before{content:'';position:absolute;top:-14px;right:-14px;width:100%;height:100%;border:1.5px solid rgba(212,163,74,.22);pointer-events:none;z-index:-1;transition:var(--transition-theme)}
+.photo-card::after{content:'';position:absolute;bottom:-14px;left:-14px;width:55%;height:55%;border-left:1.5px solid rgba(196,98,45,.28);border-bottom:1.5px solid rgba(196,98,45,.28);pointer-events:none;z-index:-1}
+.photo-frame{width:100%;aspect-ratio:3/4;background:var(--photo-bg);overflow:hidden;position:relative;transition:var(--transition-theme)}
+.photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;cursor:pointer;transition:background .3s}
+.photo-placeholder:hover{background:rgba(212,163,74,.04)}
+.avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+.avatar-head{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,rgba(212,163,74,.25),rgba(196,98,45,.18));border:2px dashed rgba(212,163,74,.3);display:flex;align-items:center;justify-content:center;font-size:2.4rem}
+.avatar-shoulder{width:130px;height:50px;background:linear-gradient(to bottom,rgba(212,163,74,.15),rgba(196,98,45,.1));border-radius:50% 50% 0 0;margin-top:-2px}
+.upload-hint{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.7}
+.upload-hint small{display:block;color:var(--text-muted);font-size:.52rem;margin-top:4px}
+.upload-icon{width:36px;height:36px;border:1.5px solid rgba(212,163,74,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--gold)}
+#photoActual{width:100%;height:100%;object-fit:cover;object-position:center top;display:none;position:absolute;inset:0}
+#photoInput{display:none}
+.photo-badge{position:absolute;bottom:18px;left:16px;right:16px;background:rgba(6,6,10,.82);backdrop-filter:blur(12px);border:1px solid rgba(212,163,74,.2);padding:12px 15px;display:flex;align-items:center;gap:11px;transition:var(--transition-theme)}
+[data-theme="light"] .photo-badge{background:rgba(250,249,246,.92);border-color:rgba(212,163,74,.3)}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.badge-text{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.07em;color:var(--text)}
+.badge-text span{color:var(--gold);display:block;font-size:.68rem;margin-bottom:1px}
+/* Change photo button */
+.change-photo-btn{position:absolute;top:12px;right:12px;background:rgba(6,6,10,.75);border:1px solid rgba(212,163,74,.3);color:var(--gold);font-family:var(--font-mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;cursor:pointer;display:none;transition:background .2s}
+[data-theme="light"] .change-photo-btn{background:rgba(250,249,246,.85)}
+.change-photo-btn:hover{background:rgba(212,163,74,.1)}
+.photo-has-image .change-photo-btn{display:block}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 24px 48px;
-    background: linear-gradient(to bottom, rgba(6,6,10,0.95), transparent);
-    backdrop-filter: blur(1px);
-  }
-  .nav-logo {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.1rem;
-    letter-spacing: 0.08em;
-    color: var(--text);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--gold); }
-  .nav-links {
-    display: flex; gap: 36px; list-style: none;
-  }
-  .nav-links a {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-cta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--black);
-    background: var(--gold);
-    padding: 10px 20px;
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: opacity 0.2s;
-  }
-  .nav-cta:hover { opacity: 0.8; }
+/* SCROLL HINT */
+.scroll-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;font-family:var(--font-mono);font-size:.57rem;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase;z-index:1}
+.scroll-line{width:1px;height:34px;background:linear-gradient(to bottom,var(--text-muted),transparent);animation:scrollAnim 1.8s ease-in-out infinite}
+@keyframes scrollAnim{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.3)}}
 
-  /* ── HERO ── */
-  #hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 48px 80px;
-    position: relative;
-    overflow: hidden;
-  }
+/* TICKER */
+.ticker{background:var(--gold);padding:9px 0;overflow:hidden;white-space:nowrap}
+.ticker-inner{display:inline-flex;animation:tickerMove 30s linear infinite}
+.ticker-item{font-family:var(--font-mono);font-size:.63rem;color:#000;letter-spacing:.12em;text-transform:uppercase;padding:0 26px;display:flex;align-items:center;gap:10px}
+.ticker-item::after{content:'◆';font-size:.36rem;opacity:.5}
+@keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-  .hero-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(196,98,45,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 20% 60%, rgba(212,163,74,0.08) 0%, transparent 60%),
-      var(--black);
-  }
+/* SECTION BASE */
+section{position:relative}
+.section-label{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:13px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);max-width:48px}
+.section-title{font-family:var(--font-display);font-weight:800;font-size:clamp(1.9rem,3.8vw,2.9rem);line-height:1.1;letter-spacing:-.02em;color:var(--text)}
 
-  .hero-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black, transparent);
-  }
+/* SERVICES */
+#services{padding:110px 48px;background:var(--bg-alt);transition:var(--transition-theme)}
+.services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;gap:40px}
+.services-intro{max-width:350px;font-size:.91rem;line-height:1.8;color:var(--text-secondary);font-weight:300}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.service-card{background:var(--bg-alt);padding:34px 26px;transition:background .3s;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--ember));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.service-card:hover{background:var(--card)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-num{font-family:var(--font-mono);font-size:.6rem;color:var(--text-muted);letter-spacing:.1em;margin-bottom:26px;display:block}
+.service-icon{font-size:1.8rem;margin-bottom:16px;display:block}
+.service-name{font-family:var(--font-display);font-weight:700;font-size:1.05rem;margin-bottom:9px;line-height:1.3;color:var(--text)}
+.service-desc{font-size:.82rem;line-height:1.7;color:var(--text-secondary)}
+.service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.tag{font-family:var(--font-mono);font-size:.55rem;letter-spacing:.08em;padding:3px 9px;border:1px solid var(--border);color:var(--text-muted);text-transform:uppercase}
+.tag.gold{border-color:rgba(212,163,74,.3);color:var(--gold)}
+.tag.ember{border-color:rgba(196,98,45,.3);color:var(--ember)}
 
-  .hero-tag {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 24px;
-    position: relative;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .hero-tag::before {
-    content: '';
-    display: inline-block;
-    width: 32px; height: 1px;
-    background: var(--gold);
-  }
+/* PROJECTS */
+#projects{padding:110px 48px;background:var(--bg);transition:var(--transition-theme)}
+.projects-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px;gap:40px}
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.project-card{background:var(--card);border:1px solid var(--border-solid);padding:34px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s,box-shadow .3s}
+.project-card:hover{border-color:rgba(212,163,74,.3);transform:translateY(-4px);box-shadow:var(--shadow)}
+.project-card.featured{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.project-glow{position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(70px);opacity:0;transition:opacity .4s;pointer-events:none}
+.project-card:hover .project-glow{opacity:1}
+.glow-gold{background:rgba(212,163,74,.07);top:-80px;right:-80px}
+.glow-ember{background:rgba(196,98,45,.07);top:-80px;left:-80px}
+.glow-green{background:rgba(61,214,140,.05);bottom:-80px;right:-80px}
+.project-status{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px}
+.status-dot{width:6px;height:6px;border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+.status-dot.live{background:var(--green);box-shadow:0 0 8px var(--green)}
+.status-dot.build{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.status-live{color:var(--green)}.status-build{color:var(--gold)}
+.project-title{font-family:var(--font-display);font-weight:800;font-size:1.45rem;letter-spacing:-.02em;margin-bottom:9px;line-height:1.1;color:var(--text)}
+.project-card.featured .project-title{font-size:2.1rem}
+.project-desc{font-size:.86rem;line-height:1.75;color:var(--text-secondary);margin-bottom:20px}
+.project-tech{display:flex;flex-wrap:wrap;gap:7px}
+.tech-pill{font-family:var(--font-mono);font-size:.58rem;padding:4px 10px;background:var(--bg-alt);border:1px solid var(--border-solid);color:var(--text-muted);letter-spacing:.05em;transition:var(--transition-theme)}
+.project-visual{aspect-ratio:4/3;background:linear-gradient(135deg,rgba(196,98,45,.08),rgba(212,163,74,.04));border:1px solid var(--border-solid);display:flex;align-items:center;justify-content:center;font-size:4.5rem;position:relative;overflow:hidden}
+.project-visual::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(0,0,0,.015) 20px,rgba(0,0,0,.015) 21px)}
 
-  .hero-name {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(4rem, 10vw, 9.5rem);
-    line-height: 0.9;
-    letter-spacing: -0.03em;
-    position: relative;
-    z-index: 1;
-  }
-  .hero-name .line1 { display: block; color: var(--text); }
-  .hero-name .line2 {
-    display: block;
-    -webkit-text-stroke: 1.5px rgba(212,163,74,0.5);
-    color: transparent;
-  }
+/* SKILLS */
+#skills{padding:110px 48px;background:var(--bg-alt);overflow:hidden;transition:var(--transition-theme)}
+.skills-layout{display:grid;grid-template-columns:1fr 2fr;gap:72px;margin-top:52px;align-items:start}
+.skills-intro{position:sticky;top:96px}
+.skills-intro p{font-size:.91rem;line-height:1.8;color:var(--text-secondary);margin-top:16px}
+.location-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid rgba(212,163,74,.2);padding:9px 15px;margin-top:24px;font-family:var(--font-mono);font-size:.64rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+.skills-categories{display:flex;flex-direction:column;gap:40px}
+.skill-category-title{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;padding-bottom:9px;border-bottom:1px solid var(--border)}
+.skills-list{display:flex;flex-direction:column;gap:13px}
+.skill-row{display:flex;align-items:center;gap:13px}
+.skill-name{width:190px;font-size:.84rem;color:var(--text-secondary);flex-shrink:0}
+.skill-bar-bg{flex:1;height:4px;background:var(--border-solid);border-radius:2px;overflow:hidden}
+.skill-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--ember));transform-origin:left;transform:scaleX(0);animation:barGrow 1.4s cubic-bezier(.16,1,.3,1) forwards;animation-play-state:paused}
+.skill-bar.animate{animation-play-state:running}
+@keyframes barGrow{to{transform:scaleX(1)}}
+.skill-pct{font-family:var(--font-mono);font-size:.6rem;color:var(--text-muted);width:34px;text-align:right}
 
-  .hero-bottom {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    margin-top: 48px;
-    position: relative; z-index: 1;
-    gap: 40px;
-  }
-  .hero-desc {
-    max-width: 400px;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: rgba(240,237,232,0.65);
-    font-weight: 300;
-  }
-  .hero-desc strong { color: var(--gold); font-weight: 500; }
+/* ABOUT */
+#about{padding:100px 48px;background:var(--bg);display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;transition:var(--transition-theme)}
+.about-text .section-title{margin-bottom:22px}
+.about-text p{font-size:.95rem;line-height:1.85;color:var(--text-secondary);margin-bottom:16px}
+.about-text p strong{color:var(--text);font-weight:500}
+.about-pills{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.pill{padding:7px 14px;background:var(--card);border:1px solid var(--border-solid);font-size:.8rem;color:var(--text-secondary);cursor:default;transition:border-color .2s,color .2s}
+.pill:hover{border-color:rgba(212,163,74,.35);color:var(--gold)}
+.about-marquee-col{overflow:hidden;height:340px;position:relative}
+.about-marquee-col::before,.about-marquee-col::after{content:'';position:absolute;left:0;right:0;z-index:1;height:70px;pointer-events:none}
+.about-marquee-col::before{top:0;background:linear-gradient(to bottom,var(--bg),transparent)}
+.about-marquee-col::after{bottom:0;background:linear-gradient(to top,var(--bg),transparent)}
+.marquee-track{display:flex;flex-direction:column;gap:11px;animation:marqueeUp 20s linear infinite}
+@keyframes marqueeUp{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.marquee-item{background:var(--card);border:1px solid var(--border-solid);padding:16px 20px;display:flex;align-items:center;gap:13px;white-space:nowrap;transition:var(--transition-theme)}
+.marquee-item-icon{font-size:1.25rem}
+.marquee-item-text{font-size:.82rem;color:var(--text-secondary);font-weight:300}
+.marquee-item-text strong{display:block;color:var(--text);font-weight:500;font-size:.88rem;margin-bottom:1px}
 
-  .hero-stats {
-    display: flex; gap: 48px;
-    flex-shrink: 0;
-  }
-  .stat-item { text-align: right; }
-  .stat-num {
-    font-family: var(--font-display);
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--text);
-    display: block;
-    line-height: 1;
-  }
-  .stat-num span { color: var(--gold); }
-  .stat-label {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 4px;
-    display: block;
-  }
+/* CONTACT */
+#contact{padding:110px 48px;background:var(--bg-alt);text-align:center;position:relative;overflow:hidden;transition:var(--transition-theme)}
+#contact::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(212,163,74,.07) 0%,transparent 70%);left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
+.contact-label{justify-content:center;margin-bottom:18px}
+.contact-title{font-family:var(--font-display);font-weight:800;font-size:clamp(2.2rem,4.5vw,4.2rem);letter-spacing:-.03em;line-height:1;margin-bottom:22px;position:relative;color:var(--text)}
+.contact-title em{font-style:normal;-webkit-text-stroke:1.5px var(--stroke-outline);color:transparent}
+.contact-sub{font-size:.95rem;color:var(--text-secondary);max-width:380px;margin:0 auto 40px;line-height:1.7}
+.contact-cta-group{display:flex;gap:13px;justify-content:center;align-items:center}
 
-  .scroll-hint {
-    position: absolute; bottom: 32px; left: 50%;
-    transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    text-transform: uppercase;
-    z-index: 1;
-  }
-  .scroll-line {
-    width: 1px; height: 40px;
-    background: linear-gradient(to bottom, var(--muted), transparent);
-    animation: scrollAnim 1.8s ease-in-out infinite;
-  }
-  @keyframes scrollAnim {
-    0%, 100% { opacity: 0.3; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.3); }
-  }
+/* FOOTER */
+footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-solid);display:flex;justify-content:space-between;align-items:center;transition:var(--transition-theme)}
+.footer-copy{font-family:var(--font-mono);font-size:.62rem;color:var(--text-muted);letter-spacing:.07em}
+.footer-socials{display:flex;gap:20px}
+.footer-socials a{font-family:var(--font-mono);font-size:.62rem;color:var(--text-muted);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.footer-socials a:hover{color:var(--gold)}
 
-  /* ── SECTIONS ── */
-  section { position: relative; }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
 
-  .section-label {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-    max-width: 60px;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
-
-  /* ── SERVICES ── */
-  #services {
-    padding: 120px 48px;
-    background: var(--dark);
-  }
-  .services-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 72px;
-    gap: 40px;
-  }
-  .services-intro {
-    max-width: 360px;
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: rgba(240,237,232,0.55);
-    font-weight: 300;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-  }
-  .service-card {
-    background: var(--dark);
-    padding: 40px 32px;
-    transition: background 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-  .service-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold), var(--ember));
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-  }
-  .service-card:hover { background: var(--card); }
-  .service-card:hover::before { transform: scaleX(1); }
-
-  .service-num {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-bottom: 32px;
-    display: block;
-  }
-  .service-icon {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    display: block;
-    filter: grayscale(0.3);
-  }
-  .service-name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.15rem;
-    margin-bottom: 12px;
-    line-height: 1.3;
-  }
-  .service-desc {
-    font-size: 0.85rem;
-    line-height: 1.7;
-    color: rgba(240,237,232,0.5);
-  }
-  .service-tags {
-    display: flex; flex-wrap: wrap; gap: 6px;
-    margin-top: 20px;
-  }
-  .tag {
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.08em;
-    padding: 4px 10px;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  .tag.gold { border-color: rgba(212,163,74,0.3); color: var(--gold); }
-  .tag.ember { border-color: rgba(196,98,45,0.3); color: var(--ember); }
-
-  /* ── PROJECTS ── */
-  #projects {
-    padding: 120px 48px;
-    background: var(--black);
-  }
-  .projects-top {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    margin-bottom: 64px;
-    gap: 40px;
-  }
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 20px;
-  }
-  .project-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 40px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
-    cursor: default;
-  }
-  .project-card:hover {
-    border-color: rgba(212,163,74,0.25);
-    transform: translateY(-4px);
-  }
-  .project-card.featured {
-    grid-column: span 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: center;
-  }
-
-  .project-glow {
-    position: absolute;
-    width: 300px; height: 300px;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0;
-    transition: opacity 0.4s;
-    pointer-events: none;
-  }
-  .project-card:hover .project-glow { opacity: 1; }
-  .glow-gold { background: rgba(212,163,74,0.08); top: -100px; right: -100px; }
-  .glow-ember { background: rgba(196,98,45,0.08); top: -100px; left: -100px; }
-  .glow-green { background: rgba(61,214,140,0.06); bottom: -100px; right: -100px; }
-
-  .project-status {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-  .status-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.8); }
-  }
-  .status-dot.live { background: var(--green); box-shadow: 0 0 8px var(--green); }
-  .status-dot.build { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
-  .status-dot.soon { background: var(--muted); }
-
-  .status-live { color: var(--green); }
-  .status-build { color: var(--gold); }
-  .status-soon { color: var(--muted); }
-
-  .project-title {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 1.6rem;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-    line-height: 1.1;
-  }
-  .project-card.featured .project-title { font-size: 2.4rem; }
-
-  .project-desc {
-    font-size: 0.9rem;
-    line-height: 1.75;
-    color: rgba(240,237,232,0.55);
-    margin-bottom: 24px;
-  }
-
-  .project-tech {
-    display: flex; flex-wrap: wrap; gap: 8px;
-  }
-  .tech-pill {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    padding: 5px 12px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    color: rgba(240,237,232,0.6);
-    letter-spacing: 0.06em;
-  }
-
-  .project-visual {
-    aspect-ratio: 4/3;
-    background: linear-gradient(135deg, rgba(196,98,45,0.1), rgba(212,163,74,0.05));
-    border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 5rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .project-visual::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 20px,
-      rgba(255,255,255,0.02) 20px,
-      rgba(255,255,255,0.02) 21px
-    );
-  }
-
-  /* ── SKILLS ── */
-  #skills {
-    padding: 120px 48px;
-    background: var(--dark);
-    overflow: hidden;
-  }
-  .skills-layout {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 80px;
-    margin-top: 64px;
-    align-items: start;
-  }
-  .skills-intro {
-    position: sticky; top: 120px;
-  }
-  .skills-intro p {
-    font-size: 0.95rem;
-    line-height: 1.8;
-    color: rgba(240,237,232,0.5);
-    margin-top: 20px;
-  }
-  .location-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--gold-dim);
-    border: 1px solid rgba(212,163,74,0.2);
-    padding: 10px 16px;
-    margin-top: 28px;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--gold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .skills-categories {
-    display: flex; flex-direction: column; gap: 48px;
-  }
-  .skill-category-title {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-  .skills-list {
-    display: flex; flex-direction: column; gap: 14px;
-  }
-  .skill-row {
-    display: flex; align-items: center; gap: 16px;
-  }
-  .skill-name {
-    width: 160px;
-    font-size: 0.88rem;
-    color: rgba(240,237,232,0.75);
-    flex-shrink: 0;
-  }
-  .skill-bar-bg {
-    flex: 1;
-    height: 4px;
-    background: rgba(255,255,255,0.07);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .skill-bar {
-    height: 100%;
-    border-radius: 2px;
-    background: linear-gradient(90deg, var(--gold), var(--ember));
-    transform-origin: left;
-    animation: barGrow 1.2s ease-out forwards;
-    transform: scaleX(0);
-  }
-  @keyframes barGrow {
-    to { transform: scaleX(1); }
-  }
-  .skill-pct {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--muted);
-    width: 36px;
-    text-align: right;
-  }
-
-  /* ── ABOUT STRIP ── */
-  #about {
-    padding: 100px 48px;
-    background: var(--black);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .about-text .section-title { margin-bottom: 28px; }
-  .about-text p {
-    font-size: 1rem;
-    line-height: 1.85;
-    color: rgba(240,237,232,0.6);
-    margin-bottom: 20px;
-  }
-  .about-text p strong { color: var(--text); font-weight: 500; }
-  .about-pills {
-    display: flex; flex-wrap: wrap; gap: 10px;
-    margin-top: 32px;
-  }
-  .pill {
-    padding: 8px 16px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    font-family: var(--font-body);
-    font-size: 0.82rem;
-    color: rgba(240,237,232,0.7);
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .pill:hover {
-    border-color: rgba(212,163,74,0.3);
-    color: var(--gold);
-  }
-
-  .about-marquee-col {
-    overflow: hidden;
-    height: 360px;
-    position: relative;
-  }
-  .about-marquee-col::before, .about-marquee-col::after {
-    content: '';
-    position: absolute; left: 0; right: 0; z-index: 1;
-    height: 80px;
-    pointer-events: none;
-  }
-  .about-marquee-col::before {
-    top: 0;
-    background: linear-gradient(to bottom, var(--black), transparent);
-  }
-  .about-marquee-col::after {
-    bottom: 0;
-    background: linear-gradient(to top, var(--black), transparent);
-  }
-  .marquee-track {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    animation: marqueeUp 20s linear infinite;
-  }
-  @keyframes marqueeUp {
-    from { transform: translateY(0); }
-    to { transform: translateY(-50%); }
-  }
-  .marquee-item {
-    background: var(--card);
-    border: 1px solid var(--border);
-    padding: 20px 24px;
-    display: flex; align-items: center; gap: 16px;
-    white-space: nowrap;
-  }
-  .marquee-item-icon { font-size: 1.4rem; }
-  .marquee-item-text {
-    font-size: 0.88rem;
-    color: rgba(240,237,232,0.6);
-    font-weight: 300;
-  }
-  .marquee-item-text strong {
-    display: block;
-    color: var(--text);
-    font-weight: 500;
-    font-size: 0.92rem;
-    margin-bottom: 2px;
-  }
-
-  /* ── CTA ── */
-  #contact {
-    padding: 120px 48px;
-    background: var(--dark);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  #contact::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(212,163,74,0.08) 0%, transparent 70%);
-    left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
-  .contact-label { justify-content: center; margin-bottom: 24px; }
-  .contact-title {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(2.5rem, 5vw, 5rem);
-    letter-spacing: -0.03em;
-    line-height: 1;
-    margin-bottom: 28px;
-    position: relative;
-  }
-  .contact-title em {
-    font-style: normal;
-    -webkit-text-stroke: 1.5px rgba(212,163,74,0.6);
-    color: transparent;
-  }
-  .contact-sub {
-    font-size: 1rem;
-    color: rgba(240,237,232,0.5);
-    max-width: 400px;
-    margin: 0 auto 48px;
-    line-height: 1.7;
-  }
-  .contact-cta-group {
-    display: flex; gap: 16px; justify-content: center; align-items: center;
-  }
-  .btn-primary {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--black);
-    background: var(--gold);
-    padding: 16px 36px;
-    text-decoration: none;
-    transition: opacity 0.2s, transform 0.2s;
-    display: inline-block;
-  }
-  .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
-  .btn-outline {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 16px 36px;
-    text-decoration: none;
-    transition: border-color 0.2s, color 0.2s;
-    display: inline-block;
-  }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-  /* ── FOOTER ── */
-  footer {
-    padding: 32px 48px;
-    background: var(--black);
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .footer-copy {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
-  .footer-socials {
-    display: flex; gap: 24px;
-  }
-  .footer-socials a {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .footer-socials a:hover { color: var(--gold); }
-
-  /* ── TICKER ── */
-  .ticker {
-    background: var(--gold);
-    padding: 10px 0;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  .ticker-inner {
-    display: inline-flex;
-    animation: tickerMove 30s linear infinite;
-    gap: 0;
-  }
-  .ticker-item {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--black);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0 32px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .ticker-item::after {
-    content: '◆';
-    font-size: 0.4rem;
-    opacity: 0.5;
-  }
-  @keyframes tickerMove {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  /* ── REVEAL ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── MOBILE ── */
-  @media (max-width: 900px) {
-    nav { padding: 20px 24px; }
-    .nav-links { display: none; }
-    #hero { padding: 0 24px 60px; }
-    .hero-bottom { flex-direction: column; align-items: flex-start; }
-    .hero-stats { gap: 28px; }
-    #services, #projects, #skills, #about, #contact { padding: 80px 24px; }
-    .services-grid { grid-template-columns: 1fr 1fr; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
-    .project-visual { display: none; }
-    .skills-layout { grid-template-columns: 1fr; gap: 48px; }
-    .skills-intro { position: static; }
-    #about { grid-template-columns: 1fr; gap: 48px; }
-    .about-marquee-col { display: none; }
-    footer { flex-direction: column; gap: 16px; text-align: center; }
-    .services-header { flex-direction: column; align-items: flex-start; }
-  }
+/* MOBILE */
+@media(max-width:960px){
+  nav{padding:18px 22px}
+  .nav-links{display:none}
+  #hero{grid-template-columns:1fr;padding:100px 22px 80px;gap:44px}
+  .hero-photo-col{order:-1}
+  .photo-card{width:240px}
+  #services,#projects,#skills,#about,#contact{padding:72px 22px}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .services-header{flex-direction:column;align-items:flex-start}
+  .projects-grid{grid-template-columns:1fr}
+  .project-card.featured{grid-column:span 1;grid-template-columns:1fr}
+  .project-visual{display:none}
+  .skills-layout{grid-template-columns:1fr;gap:40px}
+  .skills-intro{position:static}
+  #about{grid-template-columns:1fr;gap:40px}
+  .about-marquee-col{display:none}
+  footer{flex-direction:column;gap:13px;text-align:center}
+  .hero-stats{gap:22px}
+}
 </style>
 </head>
 <body>
 
-<!-- Cursor -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Nav -->
+<!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo">B<span>.</span>LAGNIDE</a>
+  <a href="#hero" class="nav-logo">S<span>.</span>B · SANNI BAYER</a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#projects">Projets</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#about">À propos</a></li>
   </ul>
-  <a href="#contact" class="nav-cta">Me contacter</a>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeToggle" title="Basculer le thème" aria-label="Toggle theme">
+      <div class="toggle-thumb" id="toggleThumb">🌙</div>
+    </button>
+    <a href="#contact" class="nav-cta">Me contacter</a>
+  </div>
 </nav>
 
-<!-- Hero -->
+<!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
 
-  <div class="hero-tag">Digital Architect · Bénin, Afrique de l'Ouest</div>
-
-  <h1 class="hero-name">
-    <span class="line1">BERENGER</span>
-    <span class="line2">LAGNIDE</span>
-  </h1>
-
-  <div class="hero-bottom">
+  <div class="hero-content">
+    <div class="hero-tag">Digital Architect · Bénin, Afrique de l'Ouest</div>
+    <h1 class="hero-name">
+      <span class="ln1">SOMMIN BERENGER</span>
+      <span class="ln2">SANNI BAYER</span>
+    </h1>
     <p class="hero-desc">
       J'aide les entrepreneurs à <strong>vendre plus et travailler moins</strong> grâce aux tunnels de vente, à l'automatisation IA et aux systèmes digitaux pensés pour l'Afrique.
     </p>
@@ -851,6 +301,39 @@
         <span class="stat-label">Launch TontineAfrique</span>
       </div>
     </div>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Démarrer un projet</a>
+      <a href="#projects" class="btn-outline">Voir mes projets</a>
+    </div>
+  </div>
+
+  <!-- PHOTO -->
+  <div class="hero-photo-col">
+    <div class="photo-card" id="photoCard">
+      <div class="photo-frame" id="photoFrame">
+        <div class="photo-placeholder" id="photoPlaceholder" onclick="document.getElementById('photoInput').click()">
+          <div class="avatar-wrap">
+            <div class="avatar-head">👤</div>
+            <div class="avatar-shoulder"></div>
+          </div>
+          <div class="upload-icon">↑</div>
+          <div class="upload-hint">
+            Cliquer pour ajouter<br>votre photo
+            <small>JPG · PNG · WEBP</small>
+          </div>
+        </div>
+        <img id="photoActual" alt="Sommin Berenger SANNI BAYER">
+        <input type="file" id="photoInput" accept="image/*">
+        <button class="change-photo-btn" onclick="document.getElementById('photoInput').click()">Changer la photo</button>
+        <div class="photo-badge">
+          <div class="badge-dot"></div>
+          <div class="badge-text">
+            <span>SANNI BAYER</span>
+            Disponible pour collaboration
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="scroll-hint">
@@ -859,7 +342,7 @@
   </div>
 </section>
 
-<!-- Ticker -->
+<!-- TICKER -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-inner">
     <span class="ticker-item">Funnel Building</span>
@@ -881,7 +364,7 @@
   </div>
 </div>
 
-<!-- Services -->
+<!-- SERVICES -->
 <section id="services">
   <div class="services-header reveal">
     <div>
@@ -890,153 +373,63 @@
     </div>
     <p class="services-intro">Des systèmes qui génèrent des résultats pendant que vous dormez. Funnels, automatisations, produits digitaux — tout orchestré pour l'efficacité maximale.</p>
   </div>
-
   <div class="services-grid reveal">
-    <div class="service-card">
-      <span class="service-num">01</span>
-      <span class="service-icon">🎯</span>
-      <div class="service-name">Funnel Building</div>
-      <p class="service-desc">Conception et déploiement de tunnels de vente haute conversion pour entrepreneurs et PME francophones.</p>
-      <div class="service-tags">
-        <span class="tag gold">Conversion</span>
-        <span class="tag">Landing Page</span>
-        <span class="tag">Email Seq.</span>
-      </div>
-    </div>
-    <div class="service-card">
-      <span class="service-num">02</span>
-      <span class="service-icon">🤖</span>
-      <div class="service-name">Automatisation IA</div>
-      <p class="service-desc">Workflows intelligents avec n8n, Make et l'API Claude pour automatiser les tâches répétitives et scaler sans recruter.</p>
-      <div class="service-tags">
-        <span class="tag gold">n8n</span>
-        <span class="tag">Make</span>
-        <span class="tag ember">Claude API</span>
-      </div>
-    </div>
-    <div class="service-card">
-      <span class="service-num">03</span>
-      <span class="service-icon">📱</span>
-      <div class="service-name">Dev Web & Mobile</div>
-      <p class="service-desc">Applications web et mobile avec une architecture solide et une UX pensée pour le marché africain et mobile-first.</p>
-      <div class="service-tags">
-        <span class="tag">React</span>
-        <span class="tag">Mobile</span>
-        <span class="tag gold">UX Africa</span>
-      </div>
-    </div>
-    <div class="service-card">
-      <span class="service-num">04</span>
-      <span class="service-icon">🎬</span>
-      <div class="service-name">Contenu & Stratégie</div>
-      <p class="service-desc">Systèmes de création de contenu vidéo (Reels, TikTok) avec production 3D, IA générative et workflows de publication automatisés.</p>
-      <div class="service-tags">
-        <span class="tag">TikTok</span>
-        <span class="tag">Reels</span>
-        <span class="tag ember">Leonardo.ai</span>
-      </div>
-    </div>
+    <div class="service-card"><span class="service-num">01</span><span class="service-icon">🎯</span><div class="service-name">Funnel Building</div><p class="service-desc">Conception et déploiement de tunnels de vente haute conversion pour entrepreneurs et PME francophones.</p><div class="service-tags"><span class="tag gold">Conversion</span><span class="tag">Landing Page</span><span class="tag">Email Seq.</span></div></div>
+    <div class="service-card"><span class="service-num">02</span><span class="service-icon">🤖</span><div class="service-name">Automatisation IA</div><p class="service-desc">Workflows intelligents avec n8n, Make et l'API Claude pour automatiser les tâches répétitives et scaler sans recruter.</p><div class="service-tags"><span class="tag gold">n8n</span><span class="tag">Make</span><span class="tag ember">Claude API</span></div></div>
+    <div class="service-card"><span class="service-num">03</span><span class="service-icon">📱</span><div class="service-name">Dev Web & Mobile</div><p class="service-desc">Applications web et mobile avec une architecture solide et une UX pensée pour le marché africain et mobile-first.</p><div class="service-tags"><span class="tag">React</span><span class="tag">Mobile</span><span class="tag gold">UX Africa</span></div></div>
+    <div class="service-card"><span class="service-num">04</span><span class="service-icon">🎬</span><div class="service-name">Contenu & Stratégie</div><p class="service-desc">Systèmes de création de contenu vidéo (Reels, TikTok) avec production 3D, IA générative et workflows automatisés.</p><div class="service-tags"><span class="tag">TikTok</span><span class="tag">Reels</span><span class="tag ember">Leonardo.ai</span></div></div>
   </div>
 </section>
 
-<!-- Projects -->
+<!-- PROJECTS -->
 <section id="projects">
   <div class="projects-top reveal">
-    <div>
-      <div class="section-label">Portfolio</div>
-      <h2 class="section-title">Projets en cours</h2>
-    </div>
+    <div><div class="section-label">Portfolio</div><h2 class="section-title">Projets en cours</h2></div>
   </div>
-
   <div class="projects-grid">
-
-    <!-- Featured: TontineAfrique -->
     <div class="project-card featured reveal">
       <div class="project-glow glow-gold"></div>
       <div>
-        <div class="project-status">
-          <span class="status-dot build"></span>
-          <span class="status-build">En développement · Lancement 2027</span>
-        </div>
+        <div class="project-status"><span class="status-dot build"></span><span class="status-build">En développement · Lancement 2027</span></div>
         <h3 class="project-title">TontineAfrique</h3>
-        <p class="project-desc">Application d'épargne digitale collaborative inspirée du modèle tontine traditionnel. Ciblant les utilisateurs non-bancarisés d'Afrique de l'Ouest via MTN, Moov, Orange et Celtiis Mobile Money. Inclut une offre SaaS white-label pour les IMF et un programme de certification d'agents.</p>
-        <div class="project-tech">
-          <span class="tech-pill">Mobile Money</span>
-          <span class="tech-pill">BCEAO Compliance</span>
-          <span class="tech-pill">SaaS B2B</span>
-          <span class="tech-pill">West Africa</span>
-          <span class="tech-pill">React Native</span>
-        </div>
+        <p class="project-desc">Application d'épargne digitale collaborative inspirée du modèle tontine traditionnel. Ciblant les utilisateurs non-bancarisés d'Afrique de l'Ouest via MTN, Moov, Orange et Celtiis. SaaS white-label pour IMF + programme de certification d'agents.</p>
+        <div class="project-tech"><span class="tech-pill">Mobile Money</span><span class="tech-pill">BCEAO Compliance</span><span class="tech-pill">SaaS B2B</span><span class="tech-pill">West Africa</span><span class="tech-pill">React Native</span></div>
       </div>
       <div class="project-visual">🪙</div>
     </div>
-
-    <!-- Crypto Farm Simulator -->
     <div class="project-card reveal">
       <div class="project-glow glow-green"></div>
-      <div class="project-status">
-        <span class="status-dot build"></span>
-        <span class="status-build">En développement</span>
-      </div>
+      <div class="project-status"><span class="status-dot build"></span><span class="status-build">En développement</span></div>
       <h3 class="project-title">Crypto Farm Simulator</h3>
-      <p class="project-desc">Jeu Roblox de type farming/idle avec économie virtuelle crypto, Game Passes et scripts Lua complets. Monétisation intégrée et gameplay addictif.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Roblox Studio</span>
-        <span class="tech-pill">Lua</span>
-        <span class="tech-pill">Game Design</span>
-        <span class="tech-pill">Monétisation</span>
-      </div>
+      <p class="project-desc">Jeu Roblox farming/idle avec économie virtuelle crypto, Game Passes et scripts Lua complets. Monétisation intégrée.</p>
+      <div class="project-tech"><span class="tech-pill">Roblox Studio</span><span class="tech-pill">Lua</span><span class="tech-pill">Game Design</span><span class="tech-pill">Monétisation</span></div>
     </div>
-
-    <!-- Trading Bot V100 -->
     <div class="project-card reveal">
       <div class="project-glow glow-ember"></div>
-      <div class="project-status">
-        <span class="status-dot live"></span>
-        <span class="status-live">En production · v9.0</span>
-      </div>
+      <div class="project-status"><span class="status-dot live"></span><span class="status-live">En production · v9.0</span></div>
       <h3 class="project-title">V100 Trading Bot</h3>
-      <p class="project-desc">Bot algorithmique pour l'indice Volatility 100 de Deriv. Logique anti-market-maker, détection de stop hunt, analyse de tick velocity et PnL batch close. Déployé sur VPS 24/7.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Deriv API</span>
-        <span class="tech-pill">Algorithmic</span>
-        <span class="tech-pill">VPS</span>
-        <span class="tech-pill">Pine Script v6</span>
-      </div>
+      <p class="project-desc">Bot algorithmique pour l'indice Volatility 100 de Deriv. Anti-market-maker, détection de stop hunt, tick velocity. VPS 24/7.</p>
+      <div class="project-tech"><span class="tech-pill">Deriv API</span><span class="tech-pill">Algorithmic</span><span class="tech-pill">VPS</span><span class="tech-pill">Pine Script v6</span></div>
     </div>
-
-    <!-- AI Prompts Pack -->
     <div class="project-card reveal">
       <div class="project-glow glow-gold"></div>
-      <div class="project-status">
-        <span class="status-dot live"></span>
-        <span class="status-live">Disponible · $12</span>
-      </div>
+      <div class="project-status"><span class="status-dot live"></span><span class="status-live">Disponible · $12</span></div>
       <h3 class="project-title">AI Prompts Pack</h3>
-      <p class="project-desc">Pack de 40 prompts IA haute valeur répartis sur 5 catégories pour entrepreneurs et créateurs de contenu. Distribué sur Selar.co.</p>
-      <div class="project-tech">
-        <span class="tech-pill">Selar.co</span>
-        <span class="tech-pill">Produit Digital</span>
-        <span class="tech-pill">40 Prompts</span>
-        <span class="tech-pill">5 Catégories</span>
-      </div>
+      <p class="project-desc">Pack de 40 prompts IA haute valeur sur 5 catégories pour entrepreneurs et créateurs de contenu. Distribué sur Selar.co.</p>
+      <div class="project-tech"><span class="tech-pill">Selar.co</span><span class="tech-pill">Produit Digital</span><span class="tech-pill">40 Prompts</span></div>
     </div>
-
   </div>
 </section>
 
-<!-- Skills -->
+<!-- SKILLS -->
 <section id="skills">
   <div class="skills-layout">
     <div class="skills-intro reveal">
       <div class="section-label">Compétences</div>
       <h2 class="section-title">Stack & expertise</h2>
       <p>Des outils maîtrisés au service d'une vision : construire l'infrastructure digitale de l'entrepreneur africain moderne.</p>
-      <div class="location-badge">
-        📍 Abomey-Calavi, Bénin
-      </div>
+      <div class="location-badge">📍 Abomey-Calavi, Bénin</div>
     </div>
-
     <div class="skills-categories reveal">
       <div>
         <div class="skill-category-title">Automatisation & IA</div>
@@ -1069,26 +462,19 @@
   </div>
 </section>
 
-<!-- About -->
+<!-- ABOUT -->
 <section id="about">
   <div class="about-text reveal">
     <div class="section-label">À propos</div>
     <h2 class="section-title">Bâtir le futur<br>digital africain</h2>
     <p>Entrepreneur tech basé à <strong>Bénin, Afrique de l'Ouest</strong>, je me spécialise à l'intersection des tunnels de vente, de l'automatisation par l'IA et du développement de produits digitaux adaptés aux réalités du marché africain.</p>
-    <p>Mon approche est simple : <strong>exécution rapide, systèmes scalables, résultats mesurables</strong>. Que ce soit pour aider un entrepreneur à automatiser ses ventes ou pour construire une fintech qui démocratise l'épargne collective en Afrique de l'Ouest.</p>
+    <p>Mon approche : <strong>exécution rapide, systèmes scalables, résultats mesurables</strong>. Que ce soit pour aider un entrepreneur à automatiser ses ventes ou construire une fintech qui démocratise l'épargne collective.</p>
     <div class="about-pills">
-      <span class="pill">🇧🇯 Bénin</span>
-      <span class="pill">🤖 AI First</span>
-      <span class="pill">📊 Funnel Builder</span>
-      <span class="pill">🎮 Game Dev</span>
-      <span class="pill">📈 Trader</span>
-      <span class="pill">🎬 Content Creator</span>
-      <span class="pill">💰 Fintech</span>
+      <span class="pill">🇧🇯 Bénin</span><span class="pill">🤖 AI First</span><span class="pill">📊 Funnel Builder</span><span class="pill">🎮 Game Dev</span><span class="pill">📈 Trader</span><span class="pill">🎬 Content Creator</span><span class="pill">💰 Fintech</span>
     </div>
   </div>
-
   <div class="about-marquee-col">
-    <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-track">
       <div class="marquee-item"><span class="marquee-item-icon">🪙</span><div class="marquee-item-text"><strong>TontineAfrique</strong>Fintech · Épargne collective</div></div>
       <div class="marquee-item"><span class="marquee-item-icon">🤖</span><div class="marquee-item-text"><strong>Automatisation n8n</strong>Workflows intelligents 24/7</div></div>
       <div class="marquee-item"><span class="marquee-item-icon">📱</span><div class="marquee-item-text"><strong>Mobile Money</strong>MTN · Moov · Orange · Celtiis</div></div>
@@ -1097,7 +483,6 @@
       <div class="marquee-item"><span class="marquee-item-icon">📈</span><div class="marquee-item-text"><strong>Trading Bot V9</strong>Deriv · Volatility 100</div></div>
       <div class="marquee-item"><span class="marquee-item-icon">🎬</span><div class="marquee-item-text"><strong>Content 3D</strong>Leonardo.ai · CapCut · ElevenLabs</div></div>
       <div class="marquee-item"><span class="marquee-item-icon">💡</span><div class="marquee-item-text"><strong>AI Prompts Pack</strong>40 prompts · Selar.co · $12</div></div>
-      <!-- duplicate for loop -->
       <div class="marquee-item"><span class="marquee-item-icon">🪙</span><div class="marquee-item-text"><strong>TontineAfrique</strong>Fintech · Épargne collective</div></div>
       <div class="marquee-item"><span class="marquee-item-icon">🤖</span><div class="marquee-item-text"><strong>Automatisation n8n</strong>Workflows intelligents 24/7</div></div>
       <div class="marquee-item"><span class="marquee-item-icon">📱</span><div class="marquee-item-text"><strong>Mobile Money</strong>MTN · Moov · Orange · Celtiis</div></div>
@@ -1110,7 +495,7 @@
   </div>
 </section>
 
-<!-- CTA / Contact -->
+<!-- CONTACT -->
 <section id="contact">
   <div class="section-label contact-label reveal">Contact</div>
   <h2 class="contact-title reveal">Travaillons<br><em>ensemble</em></h2>
@@ -1121,9 +506,9 @@
   </div>
 </section>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
-  <p class="footer-copy">© 2025 Berenger Lagnide · Abomey-Calavi, Bénin 🇧🇯</p>
+  <p class="footer-copy">© 2025 Sommin Berenger SANNI BAYER · Abomey-Calavi, Bénin 🇧🇯</p>
   <div class="footer-socials">
     <a href="#">Facebook</a>
     <a href="#">TikTok</a>
@@ -1132,47 +517,56 @@
 </footer>
 
 <script>
-  // Cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
+// Cursor
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
+
+// Theme toggle
+const html=document.documentElement;
+const toggleBtn=document.getElementById('themeToggle');
+const thumb=document.getElementById('toggleThumb');
+function setTheme(t){
+  html.setAttribute('data-theme',t);
+  thumb.textContent=t==='dark'?'🌙':'☀️';
+  localStorage.setItem('sb-theme',t);
+}
+toggleBtn.addEventListener('click',()=>setTheme(html.getAttribute('data-theme')==='dark'?'light':'dark'));
+const saved=localStorage.getItem('sb-theme');
+if(saved)setTheme(saved);
+else if(window.matchMedia('(prefers-color-scheme: light)').matches)setTheme('light');
+
+// Photo upload
+const photoInput=document.getElementById('photoInput');
+const photoActual=document.getElementById('photoActual');
+const photoPlaceholder=document.getElementById('photoPlaceholder');
+const photoCard=document.getElementById('photoCard');
+photoInput.addEventListener('change',e=>{
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    photoActual.src=ev.target.result;
+    photoActual.style.display='block';
+    photoPlaceholder.style.display='none';
+    photoCard.classList.add('photo-has-image');
+  };
+  r.readAsDataURL(f);
+});
+
+// Reveal on scroll
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);obs.unobserve(e.target)}
   });
-  function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animRing);
-  }
-  animRing();
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
 
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(r => obs.observe(r));
-
-  // Skill bar animation on scroll
-  const skillBars = document.querySelectorAll('.skill-bar');
-  const barObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.animation = 'barGrow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-        barObs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  skillBars.forEach(b => barObs.observe(b));
+// Skill bars
+const bObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('animate');bObs.unobserve(e.target)}});
+},{threshold:.4});
+document.querySelectorAll('.skill-bar').forEach(b=>bObs.observe(b));
 </script>
 </body>
 </html>
