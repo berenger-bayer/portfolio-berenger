@@ -83,13 +83,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-outline{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text);border:1px solid var(--border-solid);padding:13px 26px;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block}
 .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
 
-/* PHOTO CARD */
+/* PHOTO CARD - MODIFIÉ POUR profil.png PAR DÉFAUT */
 .hero-photo-col{position:relative;z-index:1;display:flex;justify-content:center}
 .photo-card{position:relative;width:320px}
 .photo-card::before{content:'';position:absolute;top:-14px;right:-14px;width:100%;height:100%;border:1.5px solid rgba(212,163,74,.22);pointer-events:none;z-index:-1;transition:var(--transition-theme)}
 .photo-card::after{content:'';position:absolute;bottom:-14px;left:-14px;width:55%;height:55%;border-left:1.5px solid rgba(196,98,45,.28);border-bottom:1.5px solid rgba(196,98,45,.28);pointer-events:none;z-index:-1}
 .photo-frame{width:100%;aspect-ratio:3/4;background:var(--photo-bg);overflow:hidden;position:relative;transition:var(--transition-theme)}
-.photo-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;cursor:pointer;transition:background .3s}
+.photo-placeholder{width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;cursor:pointer;transition:background .3s}
 .photo-placeholder:hover{background:rgba(212,163,74,.04)}
 .avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
 .avatar-head{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,rgba(212,163,74,.25),rgba(196,98,45,.18));border:2px dashed rgba(212,163,74,.3);display:flex;align-items:center;justify-content:center;font-size:2.4rem}
@@ -97,7 +97,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .upload-hint{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.7}
 .upload-hint small{display:block;color:var(--text-muted);font-size:.52rem;margin-top:4px}
 .upload-icon{width:36px;height:36px;border:1.5px solid rgba(212,163,74,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--gold)}
-#photoActual{width:100%;height:100%;object-fit:cover;object-position:center top;display:none;position:absolute;inset:0}
+#photoActual{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
 #photoInput{display:none}
 .photo-badge{position:absolute;bottom:18px;left:16px;right:16px;background:rgba(6,6,10,.82);backdrop-filter:blur(12px);border:1px solid rgba(212,163,74,.2);padding:12px 15px;display:flex;align-items:center;gap:11px;transition:var(--transition-theme)}
 [data-theme="light"] .photo-badge{background:rgba(250,249,246,.92);border-color:rgba(212,163,74,.3)}
@@ -105,11 +105,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
 .badge-text{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.07em;color:var(--text)}
 .badge-text span{color:var(--gold);display:block;font-size:.68rem;margin-bottom:1px}
-/* Change photo button */
-.change-photo-btn{position:absolute;top:12px;right:12px;background:rgba(6,6,10,.75);border:1px solid rgba(212,163,74,.3);color:var(--gold);font-family:var(--font-mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;cursor:pointer;display:none;transition:background .2s}
-[data-theme="light"] .change-photo-btn{background:rgba(250,249,246,.85)}
-.change-photo-btn:hover{background:rgba(212,163,74,.1)}
-.photo-has-image .change-photo-btn{display:block}
 
 /* SCROLL HINT */
 .scroll-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;font-family:var(--font-mono);font-size:.57rem;letter-spacing:.2em;color:var(--text-muted);text-transform:uppercase;z-index:1}
@@ -256,7 +251,6 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAV -->
 <nav>
   <a href="#hero" class="nav-logo">S<span>.</span>B · SANNI BAYER</a>
   <ul class="nav-links">
@@ -269,11 +263,10 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
     <button class="theme-toggle" id="themeToggle" title="Basculer le thème" aria-label="Toggle theme">
       <div class="toggle-thumb" id="toggleThumb">🌙</div>
     </button>
-    <a href="#contact" class="nav-cta">Me contacter</a>
+    <a href="mailto:somminberengersannibayer@gmail.com" class="nav-cta">Me contacter</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
@@ -302,12 +295,11 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
       </div>
     </div>
     <div class="hero-ctas">
-      <a href="#contact" class="btn-primary">Démarrer un projet</a>
+      <a href="mailto:somminberengersannibayer@gmail.com" class="btn-primary">Démarrer un projet</a>
       <a href="#projects" class="btn-outline">Voir mes projets</a>
     </div>
   </div>
 
-  <!-- PHOTO -->
   <div class="hero-photo-col">
     <div class="photo-card" id="photoCard">
       <div class="photo-frame" id="photoFrame">
@@ -317,14 +309,12 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
             <div class="avatar-shoulder"></div>
           </div>
           <div class="upload-icon">↑</div>
-          <div class="upload-hint">
-            Cliquer pour ajouter<br>votre photo
-            <small>JPG · PNG · WEBP</small>
-          </div>
+          <div class="upload-hint">Cliquer pour ajouter<small>JPG · PNG · WEBP</small></div>
         </div>
-        <img id="photoActual" alt="Sommin Berenger SANNI BAYER">
+        
+        <img id="photoActual" src="profil.png" alt="Sommin Berenger SANNI BAYER" onerror="this.style.display='none'; document.getElementById('photoPlaceholder').style.display='flex';">
         <input type="file" id="photoInput" accept="image/*">
-        <button class="change-photo-btn" onclick="document.getElementById('photoInput').click()">Changer la photo</button>
+        
         <div class="photo-badge">
           <div class="badge-dot"></div>
           <div class="badge-text">
@@ -342,7 +332,6 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
   </div>
 </section>
 
-<!-- TICKER -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-inner">
     <span class="ticker-item">Funnel Building</span>
@@ -364,7 +353,6 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
   </div>
 </div>
 
-<!-- SERVICES -->
 <section id="services">
   <div class="services-header reveal">
     <div>
@@ -381,7 +369,6 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
   <div class="projects-top reveal">
     <div><div class="section-label">Portfolio</div><h2 class="section-title">Projets en cours</h2></div>
@@ -421,7 +408,6 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills">
   <div class="skills-layout">
     <div class="skills-intro reveal">
@@ -462,7 +448,6 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
   </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
   <div class="about-text reveal">
     <div class="section-label">À propos</div>
@@ -483,30 +468,20 @@ footer{padding:26px 48px;background:var(--bg);border-top:1px solid var(--border-
       <div class="marquee-item"><span class="marquee-item-icon">📈</span><div class="marquee-item-text"><strong>Trading Bot V9</strong>Deriv · Volatility 100</div></div>
       <div class="marquee-item"><span class="marquee-item-icon">🎬</span><div class="marquee-item-text"><strong>Content 3D</strong>Leonardo.ai · CapCut · ElevenLabs</div></div>
       <div class="marquee-item"><span class="marquee-item-icon">💡</span><div class="marquee-item-text"><strong>AI Prompts Pack</strong>40 prompts · Selar.co · $12</div></div>
-      <div class="marquee-item"><span class="marquee-item-icon">🪙</span><div class="marquee-item-text"><strong>TontineAfrique</strong>Fintech · Épargne collective</div></div>
-      <div class="marquee-item"><span class="marquee-item-icon">🤖</span><div class="marquee-item-text"><strong>Automatisation n8n</strong>Workflows intelligents 24/7</div></div>
-      <div class="marquee-item"><span class="marquee-item-icon">📱</span><div class="marquee-item-text"><strong>Mobile Money</strong>MTN · Moov · Orange · Celtiis</div></div>
-      <div class="marquee-item"><span class="marquee-item-icon">🎯</span><div class="marquee-item-text"><strong>Funnel Builder</strong>Vendre plus, travailler moins</div></div>
-      <div class="marquee-item"><span class="marquee-item-icon">🎮</span><div class="marquee-item-text"><strong>Roblox Dev</strong>Crypto Farm Simulator</div></div>
-      <div class="marquee-item"><span class="marquee-item-icon">📈</span><div class="marquee-item-text"><strong>Trading Bot V9</strong>Deriv · Volatility 100</div></div>
-      <div class="marquee-item"><span class="marquee-item-icon">🎬</span><div class="marquee-item-text"><strong>Content 3D</strong>Leonardo.ai · CapCut · ElevenLabs</div></div>
-      <div class="marquee-item"><span class="marquee-item-icon">💡</span><div class="marquee-item-text"><strong>AI Prompts Pack</strong>40 prompts · Selar.co · $12</div></div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="section-label contact-label reveal">Contact</div>
   <h2 class="contact-title reveal">Travaillons<br><em>ensemble</em></h2>
   <p class="contact-sub reveal">Un projet de funnel, d'automatisation ou une idée de startup ? Je suis disponible pour des collaborations sérieuses.</p>
   <div class="contact-cta-group reveal">
-    <a href="mailto:contact@berenger.dev" class="btn-primary">Démarrer un projet</a>
+    <a href="mailto:somminberengersannibayer@gmail.com" class="btn-primary">Démarrer un projet</a>
     <a href="#projects" class="btn-outline">Voir les projets</a>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p class="footer-copy">© 2025 Sommin Berenger SANNI BAYER · Abomey-Calavi, Bénin 🇧🇯</p>
   <div class="footer-socials">
@@ -537,11 +512,11 @@ const saved=localStorage.getItem('sb-theme');
 if(saved)setTheme(saved);
 else if(window.matchMedia('(prefers-color-scheme: light)').matches)setTheme('light');
 
-// Photo upload
+// Photo upload script (permet toujours de changer l'image en direct)
 const photoInput=document.getElementById('photoInput');
 const photoActual=document.getElementById('photoActual');
 const photoPlaceholder=document.getElementById('photoPlaceholder');
-const photoCard=document.getElementById('photoCard');
+
 photoInput.addEventListener('change',e=>{
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
@@ -549,7 +524,6 @@ photoInput.addEventListener('change',e=>{
     photoActual.src=ev.target.result;
     photoActual.style.display='block';
     photoPlaceholder.style.display='none';
-    photoCard.classList.add('photo-has-image');
   };
   r.readAsDataURL(f);
 });
